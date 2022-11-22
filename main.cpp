@@ -9,13 +9,13 @@
 
 int main(int argc, char** argv) {
     if(argc != 3) {
-        std::cout << "Run with input and output image filenames." << std::endl;
+        std::cout << "Run with input image filename and filter value." << std::endl;
         return 0;
     }
 
     // Read the arguments
     const char* input_file = argv[1];
-    const char* output_file = argv[2];
+    const int filter_option = atoi(argv[2]);
 
     std::vector<unsigned char> in_image;
     unsigned int width, height;
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     // Load the data
     unsigned error = lodepng::decode(in_image, width, height, input_file);
     if(error) std::cout << "decoder error " << error << ": " << lodepng_error_text(error) << std::endl;
-
+    
     // Prepare the data
     unsigned char* input_image = new unsigned char[(in_image.size()*3)/4];
     unsigned char* output_image = new unsigned char[(in_image.size()*3)/4];
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
     }
 
     // Run the filter on it
-    filter(input_image, output_image, width, height); 
+    filter(input_image, output_image, width, height, filter_option); 
 
     // Prepare data for output
     std::vector<unsigned char> out_image;
@@ -47,9 +47,9 @@ int main(int argc, char** argv) {
             out_image.push_back(255);
         }
     }
-    
+
     // Output the data
-    error = lodepng::encode(output_file, out_image, width, height);
+    error = lodepng::encode("output_image.png", out_image, width, height);
 
     //if there's an error, display it
     if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;

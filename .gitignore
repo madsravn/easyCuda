@@ -1,3 +1,5 @@
 *.o
-*.png
 *.swp
+filter
+*output*
+/.vscode
