@@ -10,6 +10,7 @@
 int main(int argc, char** argv) {
     if(argc != 3) {
         std::cout << "Run with input image filename and filter value." << std::endl;
+        std::cout << "Look up filter values in the README file" << std::endl;
         return 0;
     }
 

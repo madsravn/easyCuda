@@ -7,9 +7,9 @@ This is for you who just wants to mess around with CUDA without having to set it
 
 `$ sh compile.sh`
 
-`$ ./filter <file_path> <0-4 filter_id value>`
+`$ ./filter <file_path> <0-5 filter_id value>`
 
-It'll generate a file called `output_image.jpg` in project folder!
+It'll generate a file called `output_image.png` in project folder!
 And that's it =]
 
 ### filter_id possible values;
