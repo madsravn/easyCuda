@@ -20,5 +20,6 @@ And that's it =]
 | 1 | black_and_white
 | 2 | grayscale
 | 3 | negative
-| 4 | detect_yellow
+| 4 | sepia
+| 5 | detect_yellow
 

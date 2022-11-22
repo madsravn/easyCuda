@@ -2,3 +2,4 @@
 *.swp
 filter
 *output*
+/.vscode
