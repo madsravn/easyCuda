@@ -91,6 +91,28 @@ void grayscale(unsigned char* input_image, unsigned char* output_image, int widt
 
 
 __global__
+void sepia(unsigned char* input_image, unsigned char* output_image, int width, int height) {
+
+    const unsigned int offset = blockIdx.x + threadIdx.x * blockDim.x;
+    
+    //origin: https://www.geeksforgeeks.org/image-processing-in-java-colored-image-to-sepia-image-conversion/
+
+    int newRed = (input_image[offset*3] * 0.393) + (input_image[offset*3+1] * 0.769) + (input_image[offset*3+2] * 0.189);
+    int newGreen = (input_image[offset*3] * 0.349) + (input_image[offset*3+1] * 0.686) + (input_image[offset*3+2] * 0.168);
+    int newBlue = (input_image[offset*3] * 0.272) + (input_image[offset*3+1] * 0.534) + (input_image[offset*3+2] * 0.131);
+    
+    newRed > 255 ? newRed = 255 : newRed = newRed;
+    newGreen > 255 ? newGreen = 255 : newGreen = newGreen;
+    newBlue > 255 ? newBlue = 255 : newBlue = newBlue;
+
+    output_image[offset*3] = newRed;
+    output_image[offset*3+1] = newGreen;
+    output_image[offset*3+2] = newBlue;
+
+}
+
+
+__global__
 void black_and_white(unsigned char* input_image, unsigned char* output_image, int width, int height) {
 
     const unsigned int offset = blockIdx.x + threadIdx.x * blockDim.x;
@@ -134,6 +156,9 @@ void filter (unsigned char* input_image, unsigned char* output_image, int width,
             negative<<<gridDims, blockDims>>>(dev_input, dev_output, width, height);
             break;
         case 4:
+            sepia<<<gridDims, blockDims>>>(dev_input, dev_output, width, height);
+            break;
+        case 5:
             detect_yellow<<<gridDims, blockDims>>>(dev_input, dev_output, width, height);
             break;
     }
